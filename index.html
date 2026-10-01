@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modelos Arquitectónicos de Software — Guía Interactiva</title>
+  <meta name="description" content="Explora los principales modelos arquitectónicos de software: Microservicios, Capas, Eventos, Cliente-Servidor y Hexagonal. Guía interactiva profesional." />
+  <meta name="keywords" content="arquitectura de software, modelos arquitectónicos, microservicios, capas, eventos, hexagonal, cliente-servidor" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- ============================================ -->
+  <!-- NAVIGATION                                    -->
+  <!-- ============================================ -->
+  <nav id="main-nav" class="nav">
+    <div class="nav__logo">
+      <span class="nav__logo-icon">◆</span>
+      <span class="nav__logo-text">ArchiModels</span>
+    </div>
+    <ul class="nav__links">
+      <li><a href="#hero" class="nav__link active" data-section="hero">Inicio</a></li>
+      <li><a href="#dashboard" class="nav__link" data-section="dashboard">Dashboard</a></li>
+      <li><a href="#models" class="nav__link" data-section="models">Modelos</a></li>
+      <li><a href="#comparison" class="nav__link" data-section="comparison">Comparativa</a></li>
+    </ul>
+    <button id="nav-toggle" class="nav__toggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- HERO SECTION                                  -->
+  <!-- ============================================ -->
+  <section id="hero" class="hero">
+    <canvas id="hero-canvas" class="hero__canvas"></canvas>
+    <div class="hero__content">
+      <div class="hero__badge">🏗️ Arquitectura de Software</div>
+      <h1 class="hero__title">
+        <span class="hero__title-line">Modelos</span>
+        <span class="hero__title-line hero__title-line--accent">Arquitectónicos</span>
+        <span class="hero__title-line">de Software</span>
+      </h1>
+      <p class="hero__subtitle">
+        Explora de forma interactiva los patrones que definen cómo se estructura, 
+        despliega y escala el software moderno.
+      </p>
+      <div class="hero__actions">
+        <a href="#dashboard" class="btn btn--primary" id="hero-cta">
+          <span>Explorar Modelos</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+        </a>
+        <a href="#models" class="btn btn--ghost" id="hero-cta-secondary">
+          <span>Ver Arquitecturas</span>
+        </a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <span class="hero__stat-number" data-count="5">0</span>
+          <span class="hero__stat-label">Modelos</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-number" data-count="3">0</span>
+          <span class="hero__stat-label">Pilares</span>
+        </div>
+        <div class="hero__stat">
+          <span class="hero__stat-number" data-count="6">0</span>
+          <span class="hero__stat-label">Categorías</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll-indicator">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- DASHBOARD SECTION                             -->
+  <!-- ============================================ -->
+  <section id="dashboard" class="section dashboard">
+    <div class="container">
+      <!-- What are Architectural Models? -->
+      <div class="section__header">
+        <span class="section__tag">01 — Fundamentos</span>
+        <h2 class="section__title">¿Qué son los Modelos Arquitectónicos?</h2>
+        <p class="section__description">
+          Un modelo arquitectónico es un <strong>blueprint estructural</strong> que define cómo se organizan, 
+          conectan y comunican los componentes de un sistema de software. Establece las reglas fundamentales 
+          de diseño que guían la construcción, el despliegue y la evolución de aplicaciones a escala.
+        </p>
+      </div>
+
+      <!-- Three Pillars -->
+      <div class="pillars" id="pillars">
+        <h3 class="pillars__heading">Ciclo de Construcción: Los 3 Pilares</h3>
+        <div class="pillars__grid">
+          <div class="pillar-card" data-pillar="visualizar">
+            <div class="pillar-card__icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="24" cy="24" r="20"/>
+                <path d="M24 4v40M4 24h40M8 12l32 24M8 36l32-24"/>
+              </svg>
+            </div>
+            <h4 class="pillar-card__title">Visualizar</h4>
+            <p class="pillar-card__text">
+              Diagramar y representar gráficamente el sistema. Permite a los equipos 
+              <strong>ver la arquitectura</strong> antes de construirla, usando diagramas UML, 
+              C4, o flujos de datos.
+            </p>
+            <ul class="pillar-card__list">
+              <li>Diagramas de componentes y despliegue</li>
+              <li>Mapas de dependencias entre servicios</li>
+              <li>Flujos de datos y secuencias de comunicación</li>
+              <li>Vistas lógicas, físicas y de proceso</li>
+            </ul>
+          </div>
+          <div class="pillar-card" data-pillar="planificar">
+            <div class="pillar-card__icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="6" y="6" width="36" height="36" rx="4"/>
+                <path d="M6 18h36M18 6v36"/>
+                <circle cx="30" cy="30" r="6"/>
+              </svg>
+            </div>
+            <h4 class="pillar-card__title">Planificar</h4>
+            <p class="pillar-card__text">
+              Facilitar la toma de decisiones técnicas, la estimación de recursos y sprints, 
+              y la <strong>mitigación de riesgos</strong> desde las fases tempranas del proyecto.
+            </p>
+            <ul class="pillar-card__list">
+              <li>Estimación de esfuerzo y complejidad por módulo</li>
+              <li>Identificación de cuellos de botella y riesgos</li>
+              <li>Definición de contratos entre equipos</li>
+              <li>Estrategia de escalabilidad y despliegue</li>
+            </ul>
+          </div>
+          <div class="pillar-card" data-pillar="comunicar">
+            <div class="pillar-card__icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 36V12a4 4 0 014-4h24a4 4 0 014 4v16a4 4 0 01-4 4H16l-8 8z"/>
+                <path d="M16 18h16M16 24h10"/>
+              </svg>
+            </div>
+            <h4 class="pillar-card__title">Comunicar</h4>
+            <p class="pillar-card__text">
+              Servir como <strong>lenguaje común</strong> entre desarrolladores, arquitectos, 
+              diseñadores UX/UI, PMs y stakeholders para alinear expectativas y decisiones.
+            </p>
+            <ul class="pillar-card__list">
+              <li>Documentación viva y comprensible</li>
+              <li>Onboarding acelerado de nuevos miembros</li>
+              <li>Alineación entre equipos técnicos y negocio</li>
+              <li>ADRs (Architecture Decision Records)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture Category Matrix -->
+      <div class="matrix" id="matrix">
+        <h3 class="matrix__heading">Matriz de Categorías Arquitectónicas</h3>
+        <div class="matrix__grid">
+          <button class="matrix__cell" data-category="monolitica">
+            <div class="matrix__cell-icon">🧱</div>
+            <h5 class="matrix__cell-title">Monolítica</h5>
+            <p class="matrix__cell-desc">Aplicación única y autocontenida. Todo el código en un solo despliegue.</p>
+            <span class="matrix__cell-tag">Tradicional</span>
+          </button>
+          <button class="matrix__cell" data-category="distribuida">
+            <div class="matrix__cell-icon">🌐</div>
+            <h5 class="matrix__cell-title">Distribuida</h5>
+            <p class="matrix__cell-desc">Componentes en múltiples nodos/servidores comunicándose por red.</p>
+            <span class="matrix__cell-tag">Escalable</span>
+          </button>
+          <button class="matrix__cell" data-category="eventos">
+            <div class="matrix__cell-icon">⚡</div>
+            <h5 class="matrix__cell-title">Basada en Eventos</h5>
+            <p class="matrix__cell-desc">Componentes reactivos que responden a eventos asincrónicos.</p>
+            <span class="matrix__cell-tag">Reactiva</span>
+          </button>
+          <button class="matrix__cell" data-category="capas">
+            <div class="matrix__cell-icon">📚</div>
+            <h5 class="matrix__cell-title">En Capas</h5>
+            <p class="matrix__cell-desc">Separación horizontal en capas de responsabilidad (UI, lógica, datos).</p>
+            <span class="matrix__cell-tag">Organizada</span>
+          </button>
+          <button class="matrix__cell" data-category="serverless">
+            <div class="matrix__cell-icon">☁️</div>
+            <h5 class="matrix__cell-title">Serverless</h5>
+            <p class="matrix__cell-desc">Funciones bajo demanda sin gestión de infraestructura.</p>
+            <span class="matrix__cell-tag">Cloud-Native</span>
+          </button>
+          <button class="matrix__cell matrix__cell--highlight" data-category="microservicios">
+            <div class="matrix__cell-icon">🔷</div>
+            <h5 class="matrix__cell-title">Microservicios</h5>
+            <p class="matrix__cell-desc">Servicios pequeños, independientes y desplegables autónomamente.</p>
+            <span class="matrix__cell-tag matrix__cell-tag--gold">⭐ Más Usado</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Most Used Model Justification -->
+      <div class="most-used" id="most-used">
+        <div class="most-used__card">
+          <div class="most-used__badge">⭐ Modelo Más Usado en la Industria</div>
+          <h3 class="most-used__title">Arquitectura de Microservicios</h3>
+          <p class="most-used__text">
+            Según encuestas de <strong>O'Reilly (2024)</strong>, <strong>InfoQ</strong> y reportes de 
+            <strong>Gartner</strong>, la arquitectura de microservicios es el modelo dominante en empresas 
+            tecnológicas y en transformación digital. Su adopción se ha acelerado gracias a:
+          </p>
+          <div class="most-used__reasons">
+            <div class="most-used__reason">
+              <span class="most-used__reason-icon">🐳</span>
+              <div>
+                <strong>Containerización (Docker + Kubernetes)</strong>
+                <p>Facilitan el despliegue independiente de cada servicio.</p>
+              </div>
+            </div>
+            <div class="most-used__reason">
+              <span class="most-used__reason-icon">☁️</span>
+              <div>
+                <strong>Cloud Computing (AWS, Azure, GCP)</strong>
+                <p>Infraestructura elástica que potencia la escalabilidad.</p>
+              </div>
+            </div>
+            <div class="most-used__reason">
+              <span class="most-used__reason-icon">🔄</span>
+              <div>
+                <strong>DevOps y CI/CD</strong>
+                <p>Pipelines independientes por servicio aceleran la entrega.</p>
+              </div>
+            </div>
+            <div class="most-used__reason">
+              <span class="most-used__reason-icon">📈</span>
+              <div>
+                <strong>Escalabilidad selectiva</strong>
+                <p>Escalar solo los servicios que lo necesitan reduce costos.</p>
+              </div>
+            </div>
+          </div>
+          <p class="most-used__adopters"><strong>Empresas adoptantes:</strong> Netflix, Amazon, Uber, Spotify, Airbnb, PayPal, eBay</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- MODELS SECTION                                -->
+  <!-- ============================================ -->
+  <section id="models" class="section models">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">02 — Modelos Arquitectónicos</span>
+        <h2 class="section__title">Explora Cada Modelo en Detalle</h2>
+        <p class="section__description">
+          Selecciona un modelo para explorar su descripción, cómo ayuda a visualizar, planificar y 
+          comunicar, junto con ventajas, desventajas y casos reales.
+        </p>
+      </div>
+
+      <!-- Model Selector Tabs -->
+      <div class="model-tabs" id="model-tabs">
+        <button class="model-tab active" data-model="microservicios">
+          <span class="model-tab__icon">🔷</span>
+          <span class="model-tab__name">Microservicios</span>
+        </button>
+        <button class="model-tab" data-model="capas">
+          <span class="model-tab__icon">📚</span>
+          <span class="model-tab__name">En Capas</span>
+        </button>
+        <button class="model-tab" data-model="eventos">
+          <span class="model-tab__icon">⚡</span>
+          <span class="model-tab__name">Event-Driven</span>
+        </button>
+        <button class="model-tab" data-model="cliente-servidor">
+          <span class="model-tab__icon">🖥️</span>
+          <span class="model-tab__name">Cliente-Servidor</span>
+        </button>
+        <button class="model-tab" data-model="hexagonal">
+          <span class="model-tab__icon">⬡</span>
+          <span class="model-tab__name">Hexagonal</span>
+        </button>
+      </div>
+
+      <!-- Model Content Area -->
+      <div class="model-content" id="model-content">
+        <!-- Dynamically populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- COMPARISON SECTION                            -->
+  <!-- ============================================ -->
+  <section id="comparison" class="section comparison">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">03 — Comparativa</span>
+        <h2 class="section__title">Matriz de Decisión Arquitectónica</h2>
+        <p class="section__description">
+          Compara los modelos en dimensiones clave para elegir la arquitectura correcta según tu contexto.
+        </p>
+      </div>
+
+      <div class="comparison__table-wrapper">
+        <table class="comparison__table" id="comparison-table">
+          <thead>
+            <tr>
+              <th>Dimensión</th>
+              <th>Microservicios</th>
+              <th>En Capas</th>
+              <th>Event-Driven</th>
+              <th>Cliente-Servidor</th>
+              <th>Hexagonal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="comparison__label">Complejidad Inicial</td>
+              <td><span class="badge badge--high">Alta</span></td>
+              <td><span class="badge badge--low">Baja</span></td>
+              <td><span class="badge badge--high">Alta</span></td>
+              <td><span class="badge badge--low">Baja</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+            </tr>
+            <tr>
+              <td class="comparison__label">Escalabilidad</td>
+              <td><span class="badge badge--excellent">Excelente</span></td>
+              <td><span class="badge badge--limited">Limitada</span></td>
+              <td><span class="badge badge--excellent">Excelente</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+            </tr>
+            <tr>
+              <td class="comparison__label">Mantenibilidad</td>
+              <td><span class="badge badge--excellent">Excelente</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+              <td><span class="badge badge--excellent">Excelente</span></td>
+            </tr>
+            <tr>
+              <td class="comparison__label">Rendimiento</td>
+              <td><span class="badge badge--mid">Variable</span></td>
+              <td><span class="badge badge--mid">Bueno</span></td>
+              <td><span class="badge badge--excellent">Excelente</span></td>
+              <td><span class="badge badge--mid">Bueno</span></td>
+              <td><span class="badge badge--mid">Bueno</span></td>
+            </tr>
+            <tr>
+              <td class="comparison__label">Testabilidad</td>
+              <td><span class="badge badge--excellent">Excelente</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+              <td><span class="badge badge--mid">Media</span></td>
+              <td><span class="badge badge--excellent">Excelente</span></td>
+            </tr>
+            <tr>
+              <td class="comparison__label">Curva Aprendizaje</td>
+              <td><span class="badge badge--high">Empinada</span></td>
+              <td><span class="badge badge--low">Suave</span></td>
+              <td><span class="badge badge--high">Empinada</span></td>
+              <td><span class="badge badge--low">Suave</span></td>
+              <td><span class="badge badge--mid">Moderada</span></td>
+            </tr>
+            <tr>
+              <td class="comparison__label">Despliegue Indep.</td>
+              <td><span class="badge badge--excellent">Sí</span></td>
+              <td><span class="badge badge--limited">No</span></td>
+              <td><span class="badge badge--excellent">Sí</span></td>
+              <td><span class="badge badge--limited">No</span></td>
+              <td><span class="badge badge--limited">No</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Decision Helper -->
+      <div class="decision-helper" id="decision-helper">
+        <h3 class="decision-helper__title">🎯 ¿Cuándo elegir cada modelo?</h3>
+        <div class="decision-helper__grid">
+          <div class="decision-card" data-decision="microservicios">
+            <h5>Microservicios</h5>
+            <p>Equipos grandes (+20 devs), alta escala, despliegues frecuentes, tolerancia a complejidad operacional.</p>
+          </div>
+          <div class="decision-card" data-decision="capas">
+            <h5>En Capas</h5>
+            <p>MVPs, aplicaciones empresariales clásicas, equipos pequeños, prioridad en simplicidad.</p>
+          </div>
+          <div class="decision-card" data-decision="eventos">
+            <h5>Event-Driven</h5>
+            <p>Sistemas en tiempo real, IoT, procesamiento de streams, alta concurrencia asincrónica.</p>
+          </div>
+          <div class="decision-card" data-decision="cliente-servidor">
+            <h5>Cliente-Servidor</h5>
+            <p>Aplicaciones web/móvil clásicas, APIs REST, separación clara frontend/backend.</p>
+          </div>
+          <div class="decision-card" data-decision="hexagonal">
+            <h5>Hexagonal</h5>
+            <p>Dominios complejos (DDD), múltiples integraciones, alta testabilidad requerida, fintech.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FOOTER                                        -->
+  <!-- ============================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__content">
+        <div class="footer__brand">
+          <span class="nav__logo-icon">◆</span>
+          <span>ArchiModels</span>
+        </div>
+        <p class="footer__text">
+          Presentación Interactiva — Modelos Arquitectónicos de Software<br />
+          Diseñado con fines educativos y de presentación profesional.
+        </p>
+        <div class="footer__references">
+          <strong>Referencias:</strong> Martin Fowler, Mark Richards (Software Architecture Patterns), 
+          Sam Newman (Building Microservices), Alistair Cockburn (Hexagonal Architecture)
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+      <button class="modal__close" id="modal-close" aria-label="Cerrar">&times;</button>
+      <div class="modal__content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
