@@ -1896,3 +1896,89 @@ strong {
   70% { box-shadow: 0 0 0 10px rgba(139,92,246,0); }
   100% { box-shadow: 0 0 0 0 rgba(139,92,246,0); }
 }
+
+/* ============================================ */
+/* GAME-LIKE INTERACTIONS                       */
+/* ============================================ */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, select, .matrix__cell, .pillar-card, .decision-card {
+    cursor: none;
+  }
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+.custom-cursor.hovering {
+  width: 12px;
+  height: 12px;
+  background-color: var(--accent-primary);
+  box-shadow: 0 0 15px var(--accent-primary);
+}
+
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(6, 182, 212, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.cursor-follower.hovering {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(99, 102, 241, 0.1);
+  border-color: var(--accent-primary);
+}
+
+/* Click Spark Particles */
+.click-spark {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+  pointer-events: none;
+  z-index: 9997;
+  animation: sparkAnim 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes sparkAnim {
+  0% { transform: scale(1) translate(0, 0); opacity: 1; }
+  100% { transform: scale(0) translate(var(--tx), var(--ty)); opacity: 0; }
+}
+
+/* 3D Tilt Elements */
+.tilt-element {
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease;
+  will-change: transform;
+}
+.tilt-element > * {
+  transform: translateZ(30px);
+  transition: transform 0.3s ease;
+}
+.tilt-element:hover > * {
+  transform: translateZ(50px);
+}

@@ -696,8 +696,7 @@ function renderModelContent(modelKey) {
         <button class="model-subtab" data-subtab="planificar">📋 Planificar</button>
         <button class="model-subtab" data-subtab="comunicar">💬 Comunicar</button>
         <button class="model-subtab" data-subtab="proscons">⚖️ Pros & Contras</button>
-        <button class="model-subtab" data-subtab="caso">🏢 Caso Real</button>
-        <button class="model-subtab model-subtab--special" data-subtab="interactivo">🎮 Interactivo</button>
+        <button class="model-subtab model-subtab--special" data-subtab="caso">🎮 Caso Real y Simulación</button>
       </div>
 
       <!-- Visualizar Panel -->
@@ -759,7 +758,7 @@ function renderModelContent(modelKey) {
         </div>
       </div>
 
-      <!-- Case Study Panel -->
+      <!-- Case Study & Interactive Panel -->
       <div class="model-panel" data-panel="caso">
         <h4 class="model-panel__title">
           <span class="model-panel__title-icon">🏢</span>
@@ -770,11 +769,8 @@ function renderModelContent(modelKey) {
           <p class="case-study__company">${model.caseStudy.company}</p>
           <p class="case-study__text">${model.caseStudy.description}</p>
         </div>
-      </div>
 
-      <!-- Interactivo Panel -->
-      <div class="model-panel" data-panel="interactivo">
-        <h4 class="model-panel__title">
+        <h4 class="model-panel__title" style="margin-top: 2rem;">
           <span class="model-panel__title-icon">🎮</span>
           Simulación Interactiva
         </h4>
@@ -1382,4 +1378,157 @@ document.addEventListener('DOMContentLoaded', () => {
   initModal();
   initSmoothScroll();
   initScrollReveal();
+  
+  // Game-like interactions
+  initCustomCursor();
+  initClickSparks();
+  init3DTilt();
+  initHeroParallax();
 });
+
+// ============================================
+// GAME-LIKE INTERACTIONS
+// ============================================
+
+// 1. Custom Cursor
+function initCustomCursor() {
+  const cursor = document.getElementById('custom-cursor');
+  const follower = document.getElementById('cursor-follower');
+  if (!cursor || !follower) return;
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let followerX = mouseX;
+  let followerY = mouseY;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function renderFollower() {
+    followerX += (mouseX - followerX) * 0.15;
+    followerY += (mouseY - followerY) * 0.15;
+    follower.style.left = followerX + 'px';
+    follower.style.top = followerY + 'px';
+    requestAnimationFrame(renderFollower);
+  }
+  renderFollower();
+
+  const interactives = document.querySelectorAll('a, button, select, .matrix__cell, .pillar-card, .decision-card');
+  interactives.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hovering');
+      follower.classList.add('hovering');
+      playHoverSound();
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hovering');
+      follower.classList.remove('hovering');
+    });
+  });
+}
+
+// 2. Click Sparks
+function initClickSparks() {
+  document.addEventListener('click', (e) => {
+    playClickSound();
+    for (let i = 0; i < 6; i++) {
+      const spark = document.createElement('div');
+      spark.classList.add('click-spark');
+      spark.style.left = e.clientX + 'px';
+      spark.style.top = e.clientY + 'px';
+      
+      const angle = (Math.PI * 2 / 6) * i + Math.random() * 0.5;
+      const velocity = 20 + Math.random() * 30;
+      const tx = Math.cos(angle) * velocity;
+      const ty = Math.sin(angle) * velocity;
+      
+      spark.style.setProperty('--tx', tx + 'px');
+      spark.style.setProperty('--ty', ty + 'px');
+      
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 600);
+    }
+  });
+}
+
+// 3. 3D Tilt Effect
+function init3DTilt() {
+  const tiltElements = document.querySelectorAll('.pillar-card, .matrix__cell, .decision-card, .model-panel');
+  tiltElements.forEach(el => {
+    el.classList.add('tilt-element');
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((y - centerY) / centerY) * -5; // Max 5 deg
+      const rotateY = ((x - centerX) / centerX) * 5;
+      
+      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+    });
+  });
+}
+
+// 4. Hero Mouse Parallax
+function initHeroParallax() {
+  const heroContent = document.querySelector('.hero__content');
+  if (!heroContent) return;
+  
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    heroContent.style.transform = `translate(${x}px, ${y}px)`;
+  });
+}
+
+// 5. Synthesized Sounds
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playSound(freq, type, duration, vol) {
+  if(audioCtx.state === 'suspended') return; // Audio context must be resumed by user interaction
+  try {
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    
+    gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + duration);
+  } catch(e) {
+    // Ignore audio errors
+  }
+}
+
+function playHoverSound() {
+  playSound(800, 'sine', 0.1, 0.02);
+}
+
+function playClickSound() {
+  playSound(400, 'triangle', 0.15, 0.05);
+  setTimeout(() => playSound(600, 'sine', 0.2, 0.03), 50);
+}
+
+// Initialize Audio Context on first interaction
+document.body.addEventListener('click', () => {
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}, { once: true });
+
