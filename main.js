@@ -697,6 +697,7 @@ function renderModelContent(modelKey) {
         <button class="model-subtab" data-subtab="comunicar">💬 Comunicar</button>
         <button class="model-subtab" data-subtab="proscons">⚖️ Pros & Contras</button>
         <button class="model-subtab" data-subtab="caso">🏢 Caso Real</button>
+        <button class="model-subtab model-subtab--special" data-subtab="interactivo">🎮 Interactivo</button>
       </div>
 
       <!-- Visualizar Panel -->
@@ -770,9 +771,302 @@ function renderModelContent(modelKey) {
           <p class="case-study__text">${model.caseStudy.description}</p>
         </div>
       </div>
+
+      <!-- Interactivo Panel -->
+      <div class="model-panel" data-panel="interactivo">
+        <h4 class="model-panel__title">
+          <span class="model-panel__title-icon">🎮</span>
+          Simulación Interactiva
+        </h4>
+        <div class="interactive-container" id="interactive-${modelKey}">
+          ${getInteractiveHTML(modelKey)}
+        </div>
+      </div>
     </div>
   `;
 }
+
+// ============================================
+// INTERACTIVE SIMULATIONS
+// ============================================
+function getInteractiveHTML(modelKey) {
+  switch(modelKey) {
+    case 'microservicios':
+      return `
+        <div class="sim-microservices">
+          <p class="sim-desc">Simula tráfico. Observa cómo cada microservicio escala de forma independiente al llegar al 100% de carga.</p>
+          <div class="sim-grid">
+            <div class="sim-service" id="sim-svc-user">
+              <h5>👤 User Svc</h5>
+              <div class="sim-load"><div class="sim-load-bar" style="width: 0%"></div></div>
+              <div class="sim-instances">Instancias: <span>1</span></div>
+              <button class="btn btn--primary btn--sm" onclick="simulateTraffic('user')">Enviar Tráfico</button>
+            </div>
+            <div class="sim-service" id="sim-svc-order">
+              <h5>🛒 Order Svc</h5>
+              <div class="sim-load"><div class="sim-load-bar" style="width: 0%"></div></div>
+              <div class="sim-instances">Instancias: <span>1</span></div>
+              <button class="btn btn--primary btn--sm" onclick="simulateTraffic('order')">Enviar Tráfico</button>
+            </div>
+            <div class="sim-service" id="sim-svc-payment">
+              <h5>💰 Payment Svc</h5>
+              <div class="sim-load"><div class="sim-load-bar" style="width: 0%"></div></div>
+              <div class="sim-instances">Instancias: <span>1</span></div>
+              <button class="btn btn--primary btn--sm" onclick="simulateTraffic('payment')">Enviar Tráfico</button>
+            </div>
+          </div>
+        </div>
+      `;
+    case 'capas':
+      return `
+        <div class="sim-layers">
+          <p class="sim-desc">Envía una petición. Observa cómo atraviesa secuencialmente cada capa hacia abajo y hacia arriba.</p>
+          <button class="btn btn--primary" id="sim-layer-btn" onclick="simulateLayerRequest()">Enviar Petición (Request)</button>
+          <div class="sim-layer-stack">
+            <div class="sim-layer" id="layer-ui">🖥️ Presentación</div>
+            <div class="sim-layer-arrow" id="arrow-1">↓</div>
+            <div class="sim-layer" id="layer-biz">⚙️ Negocio</div>
+            <div class="sim-layer-arrow" id="arrow-2">↓</div>
+            <div class="sim-layer" id="layer-data">🔌 Datos</div>
+            <div class="sim-layer-arrow" id="arrow-3">↓</div>
+            <div class="sim-layer" id="layer-db">🗄️ Base de Datos</div>
+          </div>
+        </div>
+      `;
+    case 'eventos':
+      return `
+        <div class="sim-events">
+          <p class="sim-desc">Publica un evento. Observa cómo el Broker lo distribuye y los consumidores reaccionan asíncronamente.</p>
+          <div class="sim-producer">
+            <button class="btn btn--primary" onclick="simulateEvent()">📢 Publicar Evento "OrderCreated"</button>
+          </div>
+          <div class="sim-broker" id="sim-broker">
+            Event Broker (Kafka)
+            <div class="event-dot"></div>
+          </div>
+          <div class="sim-consumers">
+            <div class="sim-consumer" id="sim-cons-email">📧 Email Svc <br><small>Esperando...</small></div>
+            <div class="sim-consumer" id="sim-cons-analytics">📊 Analytics <br><small>Esperando...</small></div>
+            <div class="sim-consumer" id="sim-cons-inventory">📦 Inventory <br><small>Esperando...</small></div>
+          </div>
+        </div>
+      `;
+    case 'cliente-servidor':
+      return `
+        <div class="sim-cs">
+          <p class="sim-desc">Añade clientes y envía peticiones al servidor centralizado. ¡Cuidado con sobrecargarlo!</p>
+          <div class="sim-cs-controls">
+            <button class="btn btn--ghost btn--sm" onclick="addClient()">+ Añadir Cliente</button>
+          </div>
+          <div class="sim-cs-layout">
+            <div class="sim-clients" id="sim-clients">
+              <div class="sim-client"><button class="btn btn--primary btn--sm" onclick="sendCsRequest(this)">Petición</button></div>
+            </div>
+            <div class="sim-server" id="sim-server">
+              <h4>🖥️ Servidor Central</h4>
+              <div class="sim-load"><div class="sim-load-bar" id="sim-server-load" style="width: 0%"></div></div>
+              <small>Carga actual</small>
+            </div>
+          </div>
+        </div>
+      `;
+    case 'hexagonal':
+      return `
+        <div class="sim-hex">
+          <p class="sim-desc">Cambia los adaptadores externos. Observa cómo el dominio central se mantiene intacto.</p>
+          <div class="sim-hex-layout">
+            <div class="sim-hex-col">
+              <label>Driving Adapter</label>
+              <select id="sim-hex-in" onchange="updateHex()">
+                <option value="REST API">🌐 REST API</option>
+                <option value="GraphQL">🔮 GraphQL</option>
+                <option value="CLI Tool">💻 CLI Tool</option>
+              </select>
+              <div class="sim-hex-adapter" id="hex-adapter-in">REST API</div>
+            </div>
+            <div class="sim-hex-core" id="hex-core">
+              <h4>⬡ Dominio</h4>
+              <small>Lógica de negocio<br>100% Pura</small>
+            </div>
+            <div class="sim-hex-col">
+              <label>Driven Adapter</label>
+              <select id="sim-hex-out" onchange="updateHex()">
+                <option value="PostgreSQL">🗄️ PostgreSQL</option>
+                <option value="MongoDB">🍃 MongoDB</option>
+                <option value="AWS S3">☁️ AWS S3</option>
+              </select>
+              <div class="sim-hex-adapter" id="hex-adapter-out">PostgreSQL</div>
+            </div>
+          </div>
+        </div>
+      `;
+    default:
+      return '';
+  }
+}
+
+const simState = {
+  microservices: { user: 0, order: 0, payment: 0 },
+  csLoad: 0
+};
+
+window.simulateTraffic = function(svc) {
+  const bar = document.querySelector(`#sim-svc-${svc} .sim-load-bar`);
+  const inst = document.querySelector(`#sim-svc-${svc} .sim-instances span`);
+  if(!bar || !inst) return;
+  
+  simState.microservices[svc] += 30;
+  let load = simState.microservices[svc];
+  
+  if (load >= 100) {
+    inst.textContent = parseInt(inst.textContent) + 1;
+    inst.style.color = 'var(--accent-emerald)';
+    setTimeout(() => inst.style.color = '', 500);
+    simState.microservices[svc] = 0;
+    load = 0;
+    bar.style.backgroundColor = 'var(--accent-emerald)';
+    setTimeout(() => { bar.style.backgroundColor = 'var(--accent-primary)'; }, 500);
+  }
+  
+  bar.style.width = load + '%';
+};
+
+window.simulateLayerRequest = function() {
+  const btn = document.getElementById('sim-layer-btn');
+  if(btn.disabled) return;
+  btn.disabled = true;
+  
+  const layers = ['layer-ui', 'layer-biz', 'layer-data', 'layer-db'];
+  const arrows = ['arrow-1', 'arrow-2', 'arrow-3'];
+  
+  let delay = 0;
+  // Downward
+  layers.forEach((l, i) => {
+    setTimeout(() => {
+      document.getElementById(l).classList.add('active-layer');
+      if(i > 0) document.getElementById(arrows[i-1]).classList.add('active-arrow', 'down');
+    }, delay);
+    delay += 300;
+  });
+  
+  // Upward
+  setTimeout(() => {
+    let upDelay = 0;
+    for(let i = layers.length - 1; i >= 0; i--) {
+      setTimeout(() => {
+        document.getElementById(layers[i]).classList.remove('active-layer');
+        document.getElementById(layers[i]).classList.add('active-layer-up');
+        setTimeout(() => document.getElementById(layers[i]).classList.remove('active-layer-up'), 300);
+        
+        if(i > 0) {
+          document.getElementById(arrows[i-1]).classList.remove('active-arrow', 'down');
+          document.getElementById(arrows[i-1]).classList.add('active-arrow', 'up');
+          document.getElementById(arrows[i-1]).textContent = '↑';
+          setTimeout(() => {
+            document.getElementById(arrows[i-1]).classList.remove('active-arrow', 'up');
+            document.getElementById(arrows[i-1]).textContent = '↓';
+          }, 300);
+        }
+      }, upDelay);
+      upDelay += 300;
+    }
+  }, delay + 200);
+  
+  setTimeout(() => { btn.disabled = false; }, delay + 200 + (layers.length*300));
+};
+
+window.simulateEvent = function() {
+  const dot = document.querySelector('.event-dot');
+  const consumers = ['sim-cons-email', 'sim-cons-analytics', 'sim-cons-inventory'];
+  
+  dot.classList.add('moving');
+  
+  setTimeout(() => {
+    dot.classList.remove('moving');
+    consumers.forEach((c, index) => {
+      setTimeout(() => {
+        const el = document.getElementById(c);
+        el.classList.add('active-consumer');
+        const small = el.querySelector('small');
+        small.textContent = '¡Procesado!';
+        small.style.color = 'var(--accent-emerald)';
+        setTimeout(() => {
+          el.classList.remove('active-consumer');
+          small.textContent = 'Esperando...';
+          small.style.color = '';
+        }, 1500);
+      }, index * 100);
+    });
+  }, 500);
+};
+
+window.addClient = function() {
+  const container = document.getElementById('sim-clients');
+  if (container.children.length >= 8) {
+    alert("Límite de clientes alcanzado en simulación.");
+    return;
+  }
+  const div = document.createElement('div');
+  div.className = 'sim-client';
+  div.innerHTML = `<button class="btn btn--primary btn--sm" onclick="sendCsRequest(this)">Petición</button>`;
+  container.appendChild(div);
+};
+
+window.sendCsRequest = function(btn) {
+  btn.classList.add('sending');
+  setTimeout(() => btn.classList.remove('sending'), 200);
+  
+  simState.csLoad += 20;
+  const bar = document.getElementById('sim-server-load');
+  const server = document.getElementById('sim-server');
+  
+  if (simState.csLoad > 100) simState.csLoad = 100;
+  bar.style.width = simState.csLoad + '%';
+  
+  if (simState.csLoad >= 80) {
+    server.classList.add('server-overload');
+    bar.style.backgroundColor = 'var(--accent-rose)';
+  } else {
+    server.classList.remove('server-overload');
+    bar.style.backgroundColor = 'var(--accent-primary)';
+  }
+  
+  setTimeout(() => {
+    simState.csLoad -= 20;
+    if (simState.csLoad < 0) simState.csLoad = 0;
+    bar.style.width = simState.csLoad + '%';
+    if (simState.csLoad < 80) {
+      server.classList.remove('server-overload');
+      bar.style.backgroundColor = 'var(--accent-primary)';
+    }
+  }, 1000);
+};
+
+window.updateHex = function() {
+  const inVal = document.getElementById('sim-hex-in').value;
+  const outVal = document.getElementById('sim-hex-out').value;
+  
+  const inAd = document.getElementById('hex-adapter-in');
+  const outAd = document.getElementById('hex-adapter-out');
+  const core = document.getElementById('hex-core');
+  
+  inAd.style.transform = 'scale(0.8)';
+  outAd.style.transform = 'scale(0.8)';
+  inAd.style.opacity = 0;
+  outAd.style.opacity = 0;
+  
+  setTimeout(() => {
+    inAd.textContent = inVal;
+    outAd.textContent = outVal;
+    inAd.style.transform = 'scale(1)';
+    outAd.style.transform = 'scale(1)';
+    inAd.style.opacity = 1;
+    outAd.style.opacity = 1;
+    
+    core.classList.add('core-pulse');
+    setTimeout(() => core.classList.remove('core-pulse'), 500);
+  }, 300);
+};
 
 // ============================================
 // HERO CANVAS - NETWORK ANIMATION
