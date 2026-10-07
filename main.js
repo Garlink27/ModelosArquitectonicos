@@ -1,3 +1,5 @@
+import { initChaos } from './chaos.js';
+
 // ============================================
 // MODELS DATA
 // ============================================
@@ -308,78 +310,108 @@ const categoryData = {
   monolitica: {
     title: '🧱 Arquitectura Monolítica',
     content: `
-      <p>Una <strong>aplicación monolítica</strong> es aquella donde todos los componentes (UI, lógica de negocio, acceso a datos) están contenidos en una sola unidad desplegable.</p>
-      <p>Toda la aplicación se compila, despliega y escala como un solo artefacto (ej. un WAR/JAR en Java, un binario en Go).</p>
+      <p>Una <strong>aplicación monolítica</strong> contiene todos sus componentes (UI, negocio, datos) en una sola unidad.</p>
       <ul>
-        <li><strong>Ventajas:</strong> Simple de desarrollar, testear y desplegar inicialmente</li>
-        <li><strong>Desventajas:</strong> Difícil de escalar y mantener a medida que crece</li>
-        <li><strong>Ideal para:</strong> MVPs, startups en fase temprana, equipos pequeños (&lt;10 devs)</li>
-        <li><strong>Ejemplo:</strong> Una aplicación Rails, Django o Laravel en sus fases iniciales</li>
+        <li><strong>Ventajas:</strong> Simple de desarrollar, testear y desplegar inicialmente.</li>
+        <li><strong>Desventajas:</strong> Difícil de escalar y mantener.</li>
+      </ul>
+      <p><strong>Ejemplos Reales:</strong></p>
+      <ul>
+        <li>1. Shopify (Originalmente un gran monolito Ruby on Rails)</li>
+        <li>2. Stack Overflow (Monolito .NET C#)</li>
+        <li>3. Basecamp (Monolito Rails clásico)</li>
+        <li>4. Etsy (Antes de su transición a microservicios)</li>
+        <li>5. Moodle (LMS tradicional PHP)</li>
       </ul>
     `
   },
-  distribuida: {
-    title: '🌐 Arquitectura Distribuida',
+  cs: {
+    title: '🖥️ Cliente-Servidor',
     content: `
-      <p>Sistemas cuyos componentes se ejecutan en <strong>múltiples nodos de red</strong> y se comunican mediante protocolos remotos.</p>
-      <p>Incluye subcategorías como microservicios, SOA, space-based architecture y service mesh.</p>
+      <p>El modelo <strong>Cliente-Servidor</strong> distribuye tareas entre proveedores de recursos (servidores) y demandantes (clientes).</p>
       <ul>
-        <li><strong>Ventajas:</strong> Alta escalabilidad, resiliencia y flexibilidad tecnológica</li>
-        <li><strong>Desventajas:</strong> Complejidad operacional, consistencia eventual, latencia de red</li>
-        <li><strong>Ideal para:</strong> Sistemas de alto tráfico y disponibilidad (99.99%)</li>
-        <li><strong>Ejemplo:</strong> Amazon Web Services (AWS), Google Cloud Platform internamente</li>
+        <li><strong>Ventajas:</strong> Centralización del control y seguridad.</li>
+        <li><strong>Desventajas:</strong> El servidor es un punto único de fallo (SPOF).</li>
       </ul>
-    `
-  },
-  eventos: {
-    title: '⚡ Arquitectura Basada en Eventos',
-    content: `
-      <p>Componentes que se comunican produciendo y consumiendo <strong>eventos asíncronos</strong> a través de un message broker.</p>
-      <p>Los eventos representan hechos ocurridos ("OrderPlaced", "PaymentProcessed") y desacoplan productores de consumidores.</p>
+      <p><strong>Ejemplos Reales:</strong></p>
       <ul>
-        <li><strong>Ventajas:</strong> Desacoplamiento extremo, procesamiento en tiempo real, escalabilidad</li>
-        <li><strong>Desventajas:</strong> Debugging complejo, consistencia eventual, infraestructura adicional</li>
-        <li><strong>Ideal para:</strong> IoT, finanzas en tiempo real, sistemas reactivos</li>
-        <li><strong>Ejemplo:</strong> Apache Kafka en LinkedIn y Uber, AWS EventBridge</li>
+        <li>1. Sistemas de Correo Electrónico (SMTP/IMAP)</li>
+        <li>2. Navegación Web Tradicional (HTTP Requests a Servidor Apache)</li>
+        <li>3. Juegos multijugador online centralizados (WoW Server)</li>
+        <li>4. Aplicaciones FTP (FileZilla)</li>
+        <li>5. Bases de Datos Remotas (MySQL Server conectado desde un cliente)</li>
       </ul>
     `
   },
   capas: {
     title: '📚 Arquitectura en Capas',
     content: `
-      <p>Organización del sistema en <strong>capas horizontales</strong> de responsabilidad (Presentación → Negocio → Datos).</p>
-      <p>Cada capa solo puede comunicarse con la capa inmediatamente inferior, creando una jerarquía de dependencias.</p>
+      <p>Organización del sistema en <strong>capas horizontales</strong> (Presentación, Negocio, Datos).</p>
       <ul>
-        <li><strong>Ventajas:</strong> Simple, bien comprendida, separación de concerns</li>
-        <li><strong>Desventajas:</strong> Escalabilidad limitada, despliegue monolítico</li>
-        <li><strong>Ideal para:</strong> Aplicaciones empresariales clásicas, ERPs, CRMs</li>
-        <li><strong>Ejemplo:</strong> Spring MVC, ASP.NET MVC, Django MTV</li>
+        <li><strong>Ventajas:</strong> Separación de responsabilidades clara.</li>
+        <li><strong>Desventajas:</strong> Escalabilidad monolítica y acumulación de latencia.</li>
+      </ul>
+      <p><strong>Ejemplos Reales:</strong></p>
+      <ul>
+        <li>1. Aplicaciones empresariales Spring Boot (Controller-Service-Repository)</li>
+        <li>2. Desarrollo tradicional ASP.NET MVC</li>
+        <li>3. Sistemas legacy bancarios y ERPs</li>
+        <li>4. Aplicaciones Django MTV (Model-Template-View)</li>
+        <li>5. Arquitectura TCP/IP y Modelo OSI en redes</li>
       </ul>
     `
   },
-  serverless: {
-    title: '☁️ Arquitectura Serverless',
+  eventos: {
+    title: '⚡ Basada en Eventos',
     content: `
-      <p>Modelo donde el desarrollador escribe <strong>funciones individuales</strong> que se ejecutan bajo demanda, sin gestionar servidores.</p>
-      <p>El proveedor cloud se encarga del escalado, disponibilidad y facturación por ejecución (pay-per-use).</p>
+      <p>Componentes que se comunican produciendo y consumiendo <strong>eventos asíncronos</strong> a través de un broker.</p>
       <ul>
-        <li><strong>Ventajas:</strong> Cero gestión de infraestructura, escala automática, costo por uso</li>
-        <li><strong>Desventajas:</strong> Cold starts, vendor lock-in, límites de ejecución</li>
-        <li><strong>Ideal para:</strong> APIs ligeras, procesamiento de eventos, backends para mobile</li>
-        <li><strong>Ejemplo:</strong> AWS Lambda + API Gateway, Vercel Functions, Cloudflare Workers</li>
+        <li><strong>Ventajas:</strong> Desacoplamiento extremo y procesamiento reactivo.</li>
+        <li><strong>Desventajas:</strong> Debugging complejo y consistencia eventual.</li>
+      </ul>
+      <p><strong>Ejemplos Reales:</strong></p>
+      <ul>
+        <li>1. Plataforma de viajes Uber (asignación de viajes)</li>
+        <li>2. LinkedIn (Pipeline de datos y métricas con Apache Kafka)</li>
+        <li>3. Sistemas de Trading en Bolsa de Valores de Nueva York</li>
+        <li>4. Procesamiento de pagos de Stripe (Webhooks)</li>
+        <li>5. IoT (Sensores de hogar inteligente enviando datos)</li>
       </ul>
     `
   },
   microservicios: {
     title: '🔷 Arquitectura de Microservicios',
     content: `
-      <p>Conjunto de <strong>servicios pequeños y autónomos</strong>, cada uno ejecutándose en su propio proceso y comunicándose por protocolos ligeros.</p>
-      <p>Cada servicio se organiza en torno a una capacidad de negocio y es desplegable de forma independiente.</p>
+      <p>Conjunto de <strong>servicios pequeños y autónomos</strong> comunicándose por protocolos ligeros.</p>
       <ul>
-        <li><strong>Ventajas:</strong> Despliegue independiente, escalabilidad granular, resiliencia</li>
-        <li><strong>Desventajas:</strong> Complejidad operacional, consistencia eventual, overhead de red</li>
-        <li><strong>Ideal para:</strong> Empresas tech de alto crecimiento, transformación digital</li>
-        <li><strong>Ejemplo:</strong> Netflix (1,000+ servicios), Amazon, Spotify, Uber</li>
+        <li><strong>Ventajas:</strong> Despliegue independiente, aislamiento de fallos (Bulkhead).</li>
+        <li><strong>Desventajas:</strong> Alta complejidad operativa y de infraestructura.</li>
+      </ul>
+      <p><strong>Ejemplos Reales:</strong></p>
+      <ul>
+        <li>1. Netflix (Pioneros, más de 1000 microservicios activos)</li>
+        <li>2. Amazon (Migración histórica desde su monolito obelisco)</li>
+        <li>3. Spotify (Servicios divididos por funcionalidades como playlists, artistas)</li>
+        <li>4. Uber (Servicios de facturación, mapas, notificaciones separados)</li>
+        <li>5. SoundCloud (Arquitectura BFF: Backend For Frontend)</li>
+      </ul>
+    `
+  },
+  hexagonal: {
+    title: '💠 Arquitectura Hexagonal',
+    content: `
+      <p>Aísla el <strong>núcleo de dominio</strong> mediante Puertos y Adaptadores (Clean Architecture).</p>
+      <ul>
+        <li><strong>Ventajas:</strong> Alta testeabilidad, agnóstica de frameworks o bases de datos.</li>
+        <li><strong>Desventajas:</strong> Curva de aprendizaje y verbosidad en el código.</li>
+      </ul>
+      <p><strong>Ejemplos Reales:</strong></p>
+      <ul>
+        <li>1. Sistemas financieros modernos de alta criticidad (Fintechs)</li>
+        <li>2. Microservicios internos de Netflix (Domain-Driven Design)</li>
+        <li>3. Software de facturación electrónica</li>
+        <li>4. Motores de reglas de negocio complejos</li>
+        <li>5. Sistemas de reservas aéreas (donde la lógica es inmutable, y los conectores web cambian)</li>
       </ul>
     `
   }
@@ -393,13 +425,17 @@ function getDiagram(type) {
     microservices: `
       <svg viewBox="0 0 600 320" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- API Gateway -->
-        <rect x="220" y="10" width="160" height="40" rx="8" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1.5"/>
-        <text x="300" y="35" text-anchor="middle" fill="#a5b4fc" font-size="13" font-weight="600" font-family="Inter">API Gateway</text>
+        <g class="svg-tooltip-trigger" data-tooltip="<strong>API Gateway</strong><br>Enruta las peticiones externas hacia el microservicio adecuado.">
+          <rect x="220" y="10" width="160" height="40" rx="8" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1.5"/>
+          <text x="300" y="35" text-anchor="middle" fill="#a5b4fc" font-size="13" font-weight="600" font-family="Inter">API Gateway</text>
+        </g>
         
         <!-- Services -->
-        <rect x="30" y="90" width="120" height="60" rx="8" fill="rgba(6,182,212,0.12)" stroke="#06b6d4" stroke-width="1.5"/>
-        <text x="90" y="118" text-anchor="middle" fill="#67e8f9" font-size="11" font-weight="600" font-family="Inter">User Service</text>
-        <text x="90" y="135" text-anchor="middle" fill="#64748b" font-size="9" font-family="Inter">Auth + Profiles</text>
+        <g class="svg-tooltip-trigger" data-tooltip="<strong>User Service</strong><br>Microservicio independiente encargado de la autenticación.">
+          <rect x="30" y="90" width="120" height="60" rx="8" fill="rgba(6,182,212,0.12)" stroke="#06b6d4" stroke-width="1.5"/>
+          <text x="90" y="118" text-anchor="middle" fill="#67e8f9" font-size="11" font-weight="600" font-family="Inter">User Service</text>
+          <text x="90" y="135" text-anchor="middle" fill="#64748b" font-size="9" font-family="Inter">Auth + Profiles</text>
+        </g>
         
         <rect x="170" y="90" width="120" height="60" rx="8" fill="rgba(16,185,129,0.12)" stroke="#10b981" stroke-width="1.5"/>
         <text x="230" y="118" text-anchor="middle" fill="#6ee7b7" font-size="11" font-weight="600" font-family="Inter">Order Service</text>
@@ -414,20 +450,20 @@ function getDiagram(type) {
         <text x="510" y="135" text-anchor="middle" fill="#64748b" font-size="9" font-family="Inter">Email + Push</text>
         
         <!-- Connections from Gateway -->
-        <line x1="260" y1="50" x2="90" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-        <line x1="290" y1="50" x2="230" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-        <line x1="320" y1="50" x2="370" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-        <line x1="350" y1="50" x2="510" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
+        <line x1="260" y1="50" x2="90" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
+        <line x1="290" y1="50" x2="230" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
+        <line x1="320" y1="50" x2="370" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
+        <line x1="350" y1="50" x2="510" y2="90" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
         
         <!-- Message Broker -->
         <rect x="140" y="185" width="320" height="35" rx="8" fill="rgba(139,92,246,0.12)" stroke="#8b5cf6" stroke-width="1.5"/>
         <text x="300" y="207" text-anchor="middle" fill="#c4b5fd" font-size="12" font-weight="600" font-family="Inter">📨 Message Broker (Kafka / RabbitMQ)</text>
         
         <!-- Connections to broker -->
-        <line x1="90" y1="150" x2="200" y2="185" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
-        <line x1="230" y1="150" x2="260" y2="185" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
-        <line x1="370" y1="150" x2="340" y2="185" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
-        <line x1="510" y1="150" x2="400" y2="185" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+        <line x1="90" y1="150" x2="200" y2="185" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.5"/>
+        <line x1="230" y1="150" x2="260" y2="185" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.5"/>
+        <line x1="370" y1="150" x2="340" y2="185" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.5"/>
+        <line x1="510" y1="150" x2="400" y2="185" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.5"/>
         
         <!-- Databases -->
         <ellipse cx="90" cy="270" rx="40" ry="16" fill="rgba(6,182,212,0.1)" stroke="#06b6d4" stroke-width="1"/>
@@ -460,7 +496,7 @@ function getDiagram(type) {
         <text x="250" y="62" text-anchor="middle" fill="#64748b" font-size="10" font-family="Inter">UI Components · Views · Controllers · HTML/CSS/JS</text>
         
         <!-- Arrow -->
-        <path d="M250 75 L250 95" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrowPurple)"/>
+        <path d="M250 75 L250 95" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,4" class="animated-flow-line" marker-end="url(#arrowPurple)"/>
         
         <!-- Business Layer -->
         <rect x="50" y="95" width="400" height="60" rx="10" fill="rgba(6,182,212,0.12)" stroke="#06b6d4" stroke-width="1.5"/>
@@ -468,7 +504,7 @@ function getDiagram(type) {
         <text x="250" y="142" text-anchor="middle" fill="#64748b" font-size="10" font-family="Inter">Services · Business Rules · Validations · Use Cases</text>
         
         <!-- Arrow -->
-        <path d="M250 155 L250 175" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrowCyan)"/>
+        <path d="M250 155 L250 175" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="4,4" class="animated-flow-line" marker-end="url(#arrowCyan)"/>
         
         <!-- Data Access Layer -->
         <rect x="50" y="175" width="400" height="60" rx="10" fill="rgba(16,185,129,0.12)" stroke="#10b981" stroke-width="1.5"/>
@@ -476,7 +512,7 @@ function getDiagram(type) {
         <text x="250" y="222" text-anchor="middle" fill="#64748b" font-size="10" font-family="Inter">Repositories · DAOs · ORM (Hibernate, EF) · Queries</text>
         
         <!-- Arrow -->
-        <path d="M250 235 L250 255" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrowGreen)"/>
+        <path d="M250 235 L250 255" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" class="animated-flow-line" marker-end="url(#arrowGreen)"/>
         
         <!-- Database Layer -->
         <rect x="50" y="255" width="400" height="60" rx="10" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="1.5"/>
@@ -536,14 +572,14 @@ function getDiagram(type) {
         <text x="520" y="182" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="600" font-family="Inter">📦 Inventory</text>
         
         <!-- Arrows: Producers → Broker -->
-        <line x1="140" y1="57" x2="200" y2="125" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-        <line x1="140" y1="117" x2="200" y2="155" stroke="#06b6d4" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-        <line x1="140" y1="177" x2="200" y2="155" stroke="#10b981" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
+        <line x1="140" y1="57" x2="200" y2="125" stroke="#6366f1" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
+        <line x1="140" y1="117" x2="200" y2="155" stroke="#06b6d4" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
+        <line x1="140" y1="177" x2="200" y2="155" stroke="#10b981" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
         
         <!-- Arrows: Broker → Consumers -->
-        <line x1="400" y1="125" x2="460" y2="57" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-        <line x1="400" y1="155" x2="460" y2="117" stroke="#f43f5e" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-        <line x1="400" y1="185" x2="460" y2="177" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
+        <line x1="400" y1="125" x2="460" y2="57" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
+        <line x1="400" y1="155" x2="460" y2="117" stroke="#f43f5e" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
+        <line x1="400" y1="185" x2="460" y2="177" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,4" class="animated-flow-line" opacity="0.6"/>
         
         <!-- Label -->
         <text x="300" y="245" text-anchor="middle" fill="#64748b" font-size="10" font-family="Inter" font-style="italic">Comunicación asíncrona: los productores publican eventos sin conocer a los consumidores</text>
@@ -1327,17 +1363,39 @@ function initModal() {
   }
 
   function closeModal() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
+    if (!document.startViewTransition || !document.getElementById('modal').style.viewTransitionName) {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      return;
+    }
+    
+    document.startViewTransition(() => {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('modal').style.viewTransitionName = '';
+    });
   }
 
-  // Category cells trigger modal
+  // Category cells trigger modal with View Transitions
   document.querySelectorAll('.matrix__cell').forEach(cell => {
-    cell.addEventListener('click', () => {
+    cell.addEventListener('click', (e) => {
       const category = cell.getAttribute('data-category');
       const data = categoryData[category];
       if (data) {
-        openModal(`<h3>${data.title}</h3>${data.content}`);
+        if (!document.startViewTransition) {
+          openModal(`<h3>${data.title}</h3>${data.content}`);
+          return;
+        }
+        
+        // Remove from all first
+        document.querySelectorAll('.matrix__cell').forEach(c => c.style.viewTransitionName = '');
+        // Apply to clicked cell
+        cell.style.viewTransitionName = 'active-category-modal';
+        
+        const transition = document.startViewTransition(() => {
+          openModal(`<h3>${data.title}</h3>${data.content}`);
+          document.getElementById('modal').style.viewTransitionName = 'active-category-modal';
+        });
       }
     });
   });
@@ -1378,12 +1436,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initModal();
   initSmoothScroll();
   initScrollReveal();
+  initChaos();
   
   // Game-like interactions
   initCustomCursor();
   initClickSparks();
   init3DTilt();
   initHeroParallax();
+  initSVGTooltips();
 });
 
 // ============================================
@@ -1457,9 +1517,15 @@ function initClickSparks() {
 
 // 3. 3D Tilt Effect
 function init3DTilt() {
-  const tiltElements = document.querySelectorAll('.pillar-card, .matrix__cell, .decision-card, .model-panel');
+  const tiltElements = document.querySelectorAll('.pillar-card, .matrix__cell, .decision-card');
   tiltElements.forEach(el => {
     el.classList.add('tilt-element');
+    
+    // Add glare element dynamically
+    const glare = document.createElement('div');
+    glare.className = 'tilt-glare';
+    el.appendChild(glare);
+
     el.addEventListener('mousemove', (e) => {
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -1468,15 +1534,52 @@ function init3DTilt() {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
       
-      const rotateX = ((y - centerY) / centerY) * -5; // Max 5 deg
-      const rotateY = ((x - centerX) / centerX) * 5;
+      const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg
+      const rotateY = ((x - centerX) / centerX) * 10;
       
-      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      
+      // Move glare
+      glare.style.transform = `translate(${x - rect.width}px, ${y - rect.height}px)`;
+      glare.style.opacity = '1';
     });
     
     el.addEventListener('mouseleave', () => {
-      el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+      el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      glare.style.opacity = '0';
     });
+  });
+}
+
+// 6. SVG Tooltips Global Logic
+function initSVGTooltips() {
+  const tooltip = document.createElement('div');
+  tooltip.className = 'global-tooltip';
+  document.body.appendChild(tooltip);
+
+  document.addEventListener('mouseover', (e) => {
+    const trigger = e.target.closest('.svg-tooltip-trigger');
+    if (trigger) {
+      const text = trigger.getAttribute('data-tooltip');
+      if(text) {
+        tooltip.innerHTML = text;
+        tooltip.classList.add('show');
+      }
+    }
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (tooltip.classList.contains('show')) {
+      tooltip.style.left = (e.clientX + 15) + 'px';
+      tooltip.style.top = (e.clientY + 15) + 'px';
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    const trigger = e.target.closest('.svg-tooltip-trigger');
+    if (trigger) {
+      tooltip.classList.remove('show');
+    }
   });
 }
 

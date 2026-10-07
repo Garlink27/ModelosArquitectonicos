@@ -24,6 +24,7 @@
       <li><a href="#hero" class="nav__link active" data-section="hero">Inicio</a></li>
       <li><a href="#dashboard" class="nav__link" data-section="dashboard">Dashboard</a></li>
       <li><a href="#models" class="nav__link" data-section="models">Modelos</a></li>
+      <li><a href="#chaos" class="nav__link" data-section="chaos">Simulación Chaos</a></li>
       <li><a href="#comparison" class="nav__link" data-section="comparison">Comparativa</a></li>
     </ul>
     <button id="nav-toggle" class="nav__toggle" aria-label="Menú">
@@ -39,13 +40,11 @@
     <div class="hero__content">
       <div class="hero__badge">🏗️ Arquitectura de Software</div>
       <h1 class="hero__title">
-        <span class="hero__title-line">Modelos</span>
-        <span class="hero__title-line hero__title-line--accent">Arquitectónicos</span>
-        <span class="hero__title-line">de Software</span>
+        <span class="hero__title-line">Estructurando el</span>
+        <span class="hero__title-line hero__title-line--accent">Software del Futuro</span>
       </h1>
       <p class="hero__subtitle">
-        Explora de forma interactiva los patrones que definen cómo se estructura, 
-        despliega y escala el software moderno.
+        Descubre cómo <strong>visualizar</strong>, <strong>planificar</strong> y <strong>comunicar</strong> la arquitectura ideal para la <strong>construcción de un proyecto</strong> exitoso.
       </p>
       <div class="hero__actions">
         <a href="#dashboard" class="btn btn--primary" id="hero-cta">
@@ -58,7 +57,7 @@
       </div>
       <div class="hero__stats">
         <div class="hero__stat">
-          <span class="hero__stat-number" data-count="5">0</span>
+          <span class="hero__stat-number" data-count="6">0</span>
           <span class="hero__stat-label">Modelos</span>
         </div>
         <div class="hero__stat">
@@ -169,11 +168,11 @@
             <p class="matrix__cell-desc">Aplicación única y autocontenida. Todo el código en un solo despliegue.</p>
             <span class="matrix__cell-tag">Tradicional</span>
           </button>
-          <button class="matrix__cell" data-category="distribuida">
-            <div class="matrix__cell-icon">🌐</div>
-            <h5 class="matrix__cell-title">Distribuida</h5>
-            <p class="matrix__cell-desc">Componentes en múltiples nodos/servidores comunicándose por red.</p>
-            <span class="matrix__cell-tag">Escalable</span>
+          <button class="matrix__cell" data-category="cs">
+            <div class="matrix__cell-icon">🖥️</div>
+            <h5 class="matrix__cell-title">Cliente-Servidor</h5>
+            <p class="matrix__cell-desc">Arquitectura clásica centralizada donde múltiples clientes piden a un servidor.</p>
+            <span class="matrix__cell-tag">Centralizada</span>
           </button>
           <button class="matrix__cell" data-category="eventos">
             <div class="matrix__cell-icon">⚡</div>
@@ -187,11 +186,11 @@
             <p class="matrix__cell-desc">Separación horizontal en capas de responsabilidad (UI, lógica, datos).</p>
             <span class="matrix__cell-tag">Organizada</span>
           </button>
-          <button class="matrix__cell" data-category="serverless">
-            <div class="matrix__cell-icon">☁️</div>
-            <h5 class="matrix__cell-title">Serverless</h5>
-            <p class="matrix__cell-desc">Funciones bajo demanda sin gestión de infraestructura.</p>
-            <span class="matrix__cell-tag">Cloud-Native</span>
+          <button class="matrix__cell" data-category="hexagonal">
+            <div class="matrix__cell-icon">💠</div>
+            <h5 class="matrix__cell-title">Hexagonal</h5>
+            <p class="matrix__cell-desc">Núcleo de dominio aislado mediante puertos y adaptadores.</p>
+            <span class="matrix__cell-tag">Clean Arch</span>
           </button>
           <button class="matrix__cell matrix__cell--highlight" data-category="microservicios">
             <div class="matrix__cell-icon">🔷</div>
@@ -289,6 +288,114 @@
       <!-- Model Content Area -->
       <div class="model-content" id="model-content">
         <!-- Dynamically populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- CHAOS SECTION                                 -->
+  <!-- ============================================ -->
+  <section id="chaos" class="section chaos">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">03 — Simulación en Vivo</span>
+        <h2 class="section__title">Ingeniería del Caos: Monolito vs Microservicios</h2>
+        <p class="section__description">
+          Toma el control del caos. Ataca ambas arquitecturas simultáneamente y observa visualmente cómo el patrón de fallos afecta la disponibilidad del sistema.
+        </p>
+      </div>
+      
+      <div class="chaos-dashboard">
+        <!-- Controls -->
+        <div class="chaos-controls">
+          <h3 class="chaos-controls__title">Herramientas de Ataque 🐒</h3>
+          <p class="chaos-controls__desc">Elige un tipo de fallo para inyectar en ambas arquitecturas:</p>
+          <div class="chaos-btn-group">
+            <button class="btn btn--danger chaos-btn" data-attack="kill-db">🔥 Fallo de Base de Datos</button>
+            <button class="btn btn--warning chaos-btn" data-attack="kill-node">⚡ Caída de Componente</button>
+            <button class="btn btn--primary chaos-btn" data-attack="ddos">🌊 Pico de Tráfico Masiivo</button>
+            <button class="btn btn--secondary chaos-btn" data-attack="latency">🐌 Alta Latencia de Red</button>
+            <button class="btn btn--ghost chaos-btn" data-attack="reset">🔄 Restaurar Sistemas</button>
+          </div>
+          <div class="chaos-log" id="chaos-log">
+            <div class="log-entry success">▶ Sistemas en línea y tráfico fluyendo estable...</div>
+          </div>
+        </div>
+        
+        <!-- Arenas -->
+        <div class="chaos-arenas">
+          <!-- Monolith -->
+          <div class="chaos-arena" id="arena-mono">
+            <div class="chaos-arena__header">
+              <h4>Monolito Clásico</h4>
+              <div class="chaos-status badge badge--excellent" id="status-mono">ONLINE</div>
+            </div>
+            <div class="chaos-canvas-wrapper">
+               <canvas id="canvas-mono" width="300" height="250"></canvas>
+            </div>
+            <p class="chaos-arena__desc">Todo en un solo bloque. Un fallo puede derribarlo todo masivamente.</p>
+          </div>
+
+          <!-- Client-Server -->
+          <div class="chaos-arena" id="arena-cs">
+            <div class="chaos-arena__header">
+              <h4>Cliente-Servidor</h4>
+              <div class="chaos-status badge badge--excellent" id="status-cs">ONLINE</div>
+            </div>
+            <div class="chaos-canvas-wrapper">
+               <canvas id="canvas-cs" width="300" height="250"></canvas>
+            </div>
+            <p class="chaos-arena__desc">Un servidor centralizado (SPOF) vulnerable a sobrecargas y fallos.</p>
+          </div>
+
+          <!-- Layered -->
+          <div class="chaos-arena" id="arena-layered">
+            <div class="chaos-arena__header">
+              <h4>Capas (N-Tier)</h4>
+              <div class="chaos-status badge badge--excellent" id="status-layered">ONLINE</div>
+            </div>
+            <div class="chaos-canvas-wrapper">
+               <canvas id="canvas-layered" width="300" height="250"></canvas>
+            </div>
+            <p class="chaos-arena__desc">Lógica estructurada en cascada. La latencia se suma; si una capa cae, todo cae.</p>
+          </div>
+          
+          <!-- Event-Driven -->
+          <div class="chaos-arena" id="arena-events">
+            <div class="chaos-arena__header">
+              <h4>Orientado a Eventos</h4>
+              <div class="chaos-status badge badge--excellent" id="status-events">ONLINE</div>
+            </div>
+            <div class="chaos-canvas-wrapper">
+               <canvas id="canvas-events" width="300" height="250"></canvas>
+            </div>
+            <p class="chaos-arena__desc">Asíncrono y desacoplado. Tolerante a fallos parciales de consumidores.</p>
+          </div>
+
+          <!-- Microservices -->
+          <div class="chaos-arena" id="arena-micro">
+            <div class="chaos-arena__header">
+              <h4>Microservicios</h4>
+              <div class="chaos-status badge badge--excellent" id="status-micro">ONLINE</div>
+            </div>
+            <div class="chaos-canvas-wrapper">
+               <canvas id="canvas-micro" width="300" height="250"></canvas>
+            </div>
+            <p class="chaos-arena__desc">Aislamiento de fallos (Bulkhead). Si cae un servicio, el resto sobrevive.</p>
+          </div>
+
+          <!-- Hexagonal -->
+          <div class="chaos-arena" id="arena-hex">
+            <div class="chaos-arena__header">
+              <h4>Arquitectura Hexagonal</h4>
+              <div class="chaos-status badge badge--excellent" id="status-hex">ONLINE</div>
+            </div>
+            <div class="chaos-canvas-wrapper">
+               <canvas id="canvas-hex" width="300" height="250"></canvas>
+            </div>
+            <p class="chaos-arena__desc">Puertos y Adaptadores. Núcleo protegido contra fallos externos de red.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
