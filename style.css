@@ -385,6 +385,16 @@ body {
 .terminal__content h4 { font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: var(--accent-cyan); }
 .terminal__content strong { color: var(--accent-cyan); }
 .terminal__content em { color: var(--text-muted); }
+.architecture-illustration {
+  margin: 1rem 0 1.25rem;
+  padding: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  background: linear-gradient(145deg, rgba(6, 182, 212, 0.07), rgba(18, 18, 42, 0.4));
+}
+.architecture-illustration svg { display: block; width: 100%; height: auto; }
+.architecture-illustration svg text { font: 12px var(--font-sans); }
+.architecture-illustration figcaption { margin-top: 0.45rem; color: var(--text-muted); font-size: 0.72rem; text-align: center; }
 
 /* Chunk reveal animation */
 .chunk-reveal {

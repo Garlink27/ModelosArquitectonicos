@@ -66,8 +66,66 @@ const categoryData = {
   hexagonal: { title: '💠 Arquitectura Hexagonal', content: '<p>Aísla el <strong>núcleo de dominio</strong> mediante Puertos y Adaptadores (Clean Architecture).</p><ul><li><strong>Ventajas:</strong> Alta testeabilidad, agnóstica de frameworks o bases de datos.</li><li><strong>Desventajas:</strong> Curva de aprendizaje y verbosidad en el código.</li></ul><p><strong>Ejemplos:</strong> Fintechs, Netflix (DDD), Facturación electrónica, Motores de reglas, Reservas aéreas.</p>' }
 };
 
-function modelToHtml(m) {
-  let h = `<h3>${m.icon} ${m.name}</h3><p><em>${m.subtitle}</em></p><p>${m.description}</p>`;
+const architectureDiagrams = {
+  monolitica: {
+    label: 'Arquitectura monolítica', caption: 'Módulos integrados en una sola aplicación',
+    svg: '<rect x="60" y="22" width="360" height="146" rx="8" fill="#111d28" stroke="#67e8f9" stroke-width="2"/><text x="240" y="45" text-anchor="middle" fill="#67e8f9">UNA APLICACIÓN · UN DESPLIEGUE</text><rect x="86" y="61" width="142" height="40" rx="4" fill="#1d3040" stroke="#426071"/><text x="157" y="86" text-anchor="middle" fill="#e2e8f0">Interfaz</text><rect x="252" y="61" width="142" height="40" rx="4" fill="#1d3040" stroke="#426071"/><text x="323" y="86" text-anchor="middle" fill="#e2e8f0">Negocio</text><rect x="169" y="115" width="142" height="34" rx="4" fill="#1d3040" stroke="#426071"/><text x="240" y="137" text-anchor="middle" fill="#e2e8f0">Datos</text><path d="M157 101v8h83m83-8v8h-83" fill="none" stroke="#fbbf24" stroke-width="2"/>'
+  },
+  cs: {
+    label: 'Arquitectura cliente-servidor', caption: 'El cliente solicita; el servidor responde',
+    svg: '<rect x="18" y="60" width="120" height="68" rx="6" fill="#162735" stroke="#67e8f9" stroke-width="2"/><text x="78" y="89" text-anchor="middle" fill="#e2e8f0">Cliente</text><text x="78" y="108" text-anchor="middle" fill="#94a3b8">Web / app</text><rect x="180" y="49" width="120" height="90" rx="6" fill="#162735" stroke="#fbbf24" stroke-width="2"/><text x="240" y="86" text-anchor="middle" fill="#e2e8f0">Servidor</text><text x="240" y="107" text-anchor="middle" fill="#94a3b8">API / lógica</text><path d="M138 81h34m-7-6 7 6-7 6M180 109h-34m7-6-7 6 7 6" fill="none" stroke="#67e8f9" stroke-width="2"/><text x="158" y="67" text-anchor="middle" fill="#94a3b8">HTTP</text><path d="M300 94h34m-7-6 7 6-7 6" fill="none" stroke="#fbbf24" stroke-width="2"/><rect x="338" y="60" width="122" height="68" rx="6" fill="#162735" stroke="#426071" stroke-width="2"/><text x="399" y="89" text-anchor="middle" fill="#e2e8f0">Base de datos</text><text x="399" y="108" text-anchor="middle" fill="#94a3b8">Persistencia</text>'
+  },
+  capas: {
+    label: 'Arquitectura en capas', caption: 'Cada nivel delega responsabilidades al siguiente',
+    svg: '<rect x="112" y="14" width="256" height="42" rx="5" fill="#162735" stroke="#67e8f9" stroke-width="2"/><text x="240" y="40" text-anchor="middle" fill="#e2e8f0">Presentación</text><path d="M240 56v17m-6-7 6 7 6-7" fill="none" stroke="#fbbf24" stroke-width="2"/><rect x="112" y="74" width="256" height="42" rx="5" fill="#162735" stroke="#fbbf24" stroke-width="2"/><text x="240" y="100" text-anchor="middle" fill="#e2e8f0">Lógica de negocio</text><path d="M240 116v17m-6-7 6 7 6-7" fill="none" stroke="#fbbf24" stroke-width="2"/><rect x="112" y="134" width="256" height="42" rx="5" fill="#162735" stroke="#10b981" stroke-width="2"/><text x="240" y="160" text-anchor="middle" fill="#e2e8f0">Acceso a datos</text>'
+  },
+  eventos: {
+    label: 'Arquitectura basada en eventos', caption: 'Productores y consumidores se conectan mediante un broker',
+    svg: '<rect x="18" y="55" width="116" height="76" rx="6" fill="#162735" stroke="#67e8f9" stroke-width="2"/><text x="76" y="88" text-anchor="middle" fill="#e2e8f0">Productores</text><text x="76" y="108" text-anchor="middle" fill="#94a3b8">Publican eventos</text><path d="M134 93h48m-7-6 7 6-7 6M298 93h48m-7-6 7 6-7 6" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 4"/><rect x="184" y="43" width="110" height="100" rx="18" fill="#282218" stroke="#fbbf24" stroke-width="2"/><text x="239" y="87" text-anchor="middle" fill="#fbbf24">BROKER</text><text x="239" y="108" text-anchor="middle" fill="#e2e8f0">Kafka</text><rect x="348" y="55" width="116" height="76" rx="6" fill="#162735" stroke="#10b981" stroke-width="2"/><text x="406" y="88" text-anchor="middle" fill="#e2e8f0">Consumidores</text><text x="406" y="108" text-anchor="middle" fill="#94a3b8">Reaccionan</text>'
+  },
+  microservicios: {
+    label: 'Arquitectura de microservicios', caption: 'Servicios autónomos con despliegue independiente',
+    svg: '<path d="M112 67h37m-7-6 7 6-7 6m108-6h37m-7-6 7 6-7 6" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 4"/><rect x="18" y="31" width="94" height="72" rx="6" fill="#162735" stroke="#67e8f9" stroke-width="2"/><text x="65" y="60" text-anchor="middle" fill="#e2e8f0">Usuarios</text><text x="65" y="81" text-anchor="middle" fill="#94a3b8">API propia</text><rect x="149" y="31" width="102" height="72" rx="6" fill="#162735" stroke="#fbbf24" stroke-width="2"/><text x="200" y="60" text-anchor="middle" fill="#e2e8f0">Pedidos</text><text x="200" y="81" text-anchor="middle" fill="#94a3b8">API propia</text><rect x="288" y="31" width="102" height="72" rx="6" fill="#162735" stroke="#10b981" stroke-width="2"/><text x="339" y="60" text-anchor="middle" fill="#e2e8f0">Pagos</text><text x="339" y="81" text-anchor="middle" fill="#94a3b8">API propia</text><path d="M65 103v15m135-15v15m139-15v15" fill="none" stroke="#426071" stroke-width="2"/><path d="M48 119h34v29H48zm135 0h34v29h-34zm139 0h34v29h-34z" fill="#111d28" stroke="#426071" stroke-width="2"/><text x="65" y="138" text-anchor="middle" fill="#94a3b8">BD</text><text x="200" y="138" text-anchor="middle" fill="#94a3b8">BD</text><text x="339" y="138" text-anchor="middle" fill="#94a3b8">BD</text>'
+  },
+  hexagonal: {
+    label: 'Arquitectura hexagonal', caption: 'El dominio queda aislado detrás de puertos y adaptadores',
+    svg: '<rect x="22" y="61" width="104" height="54" rx="5" fill="#162735" stroke="#426071" stroke-width="2"/><text x="74" y="84" text-anchor="middle" fill="#e2e8f0">REST / UI</text><text x="74" y="102" text-anchor="middle" fill="#94a3b8">Adaptador</text><path d="M126 88h49m-7-6 7 6-7 6m132 0h49m-7-6 7 6-7 6" fill="none" stroke="#67e8f9" stroke-width="2"/><polygon points="240,28 294,58 294,118 240,148 186,118 186,58" fill="#282218" stroke="#fbbf24" stroke-width="2"/><text x="240" y="83" text-anchor="middle" fill="#fbbf24">DOMINIO</text><text x="240" y="103" text-anchor="middle" fill="#e2e8f0">Reglas puras</text><rect x="354" y="61" width="104" height="54" rx="5" fill="#162735" stroke="#426071" stroke-width="2"/><text x="406" y="84" text-anchor="middle" fill="#e2e8f0">Base de datos</text><text x="406" y="102" text-anchor="middle" fill="#94a3b8">Adaptador</text>'
+  }
+};
+
+function architectureIllustration(id) {
+  const diagram = architectureDiagrams[id === 'cliente-servidor' ? 'cs' : id];
+  if (!diagram) return '';
+  return `<figure class="architecture-illustration"><svg viewBox="0 0 480 190" role="img" aria-label="${diagram.label}">${diagram.svg}</svg><figcaption>${diagram.caption}</figcaption></figure>`;
+}
+
+const foundationIllustrations = {
+  intro: {
+    label: 'Componentes conectados de un sistema de software', caption: 'La arquitectura define cómo se relacionan las partes del sistema',
+    svg: '<rect x="26" y="61" width="118" height="62" rx="6" fill="#162735" stroke="#67e8f9" stroke-width="2"/><text x="85" y="89" text-anchor="middle" fill="#e2e8f0">Interfaz</text><text x="85" y="108" text-anchor="middle" fill="#94a3b8">Usuario</text><path d="M144 92h46m-7-6 7 6-7 6" fill="none" stroke="#fbbf24" stroke-width="2"/><rect x="194" y="48" width="124" height="88" rx="6" fill="#282218" stroke="#fbbf24" stroke-width="2"/><text x="256" y="86" text-anchor="middle" fill="#fbbf24">Arquitectura</text><text x="256" y="107" text-anchor="middle" fill="#e2e8f0">Reglas y diseño</text><path d="M318 92h46m-7-6 7 6-7 6" fill="none" stroke="#10b981" stroke-width="2"/><rect x="368" y="61" width="90" height="62" rx="6" fill="#162735" stroke="#10b981" stroke-width="2"/><text x="413" y="89" text-anchor="middle" fill="#e2e8f0">Datos</text><text x="413" y="108" text-anchor="middle" fill="#94a3b8">Servicios</text>'
+  },
+  vis: {
+    label: 'Diagrama de componentes y dependencias', caption: 'Visualizar ayuda a entender componentes y flujos',
+    svg: '<rect x="30" y="22" width="160" height="54" rx="5" fill="#162735" stroke="#67e8f9" stroke-width="2"/><text x="110" y="54" text-anchor="middle" fill="#e2e8f0">Aplicación web</text><rect x="290" y="22" width="160" height="54" rx="5" fill="#162735" stroke="#fbbf24" stroke-width="2"/><text x="370" y="54" text-anchor="middle" fill="#e2e8f0">API</text><rect x="160" y="116" width="160" height="54" rx="5" fill="#162735" stroke="#10b981" stroke-width="2"/><text x="240" y="148" text-anchor="middle" fill="#e2e8f0">Base de datos</text><path d="M190 49h93m-7-6 7 6-7 6M370 76 305 112m2-8-2 8 8-1M160 139 89 79m1 9-1-9 9 2" fill="none" stroke="#94a3b8" stroke-width="2"/><circle cx="240" cy="92" r="4" fill="#fbbf24"/>'
+  },
+  plan: {
+    label: 'Etapas de planificación de una arquitectura', caption: 'Decisiones ordenadas para construir y desplegar el sistema',
+    svg: '<path d="M90 94h300" fill="none" stroke="#426071" stroke-width="3"/><circle cx="100" cy="94" r="25" fill="#162735" stroke="#67e8f9" stroke-width="2"/><circle cx="240" cy="94" r="25" fill="#282218" stroke="#fbbf24" stroke-width="2"/><circle cx="380" cy="94" r="25" fill="#162735" stroke="#10b981" stroke-width="2"/><text x="100" y="99" text-anchor="middle" fill="#e2e8f0">01</text><text x="240" y="99" text-anchor="middle" fill="#e2e8f0">02</text><text x="380" y="99" text-anchor="middle" fill="#e2e8f0">03</text><text x="100" y="143" text-anchor="middle" fill="#e2e8f0">Decidir</text><text x="240" y="143" text-anchor="middle" fill="#e2e8f0">Estimar</text><text x="380" y="143" text-anchor="middle" fill="#e2e8f0">Desplegar</text>'
+  },
+  com: {
+    label: 'Equipos colaborando alrededor de una arquitectura compartida', caption: 'Un modelo común alinea a negocio y equipos técnicos',
+    svg: '<circle cx="240" cy="94" r="48" fill="#282218" stroke="#fbbf24" stroke-width="2"/><text x="240" y="89" text-anchor="middle" fill="#fbbf24">DISEÑO</text><text x="240" y="109" text-anchor="middle" fill="#e2e8f0">compartido</text><path d="M192 79 136 55m56 55-56 25m152-56 56-24m-56 55 56 25" fill="none" stroke="#67e8f9" stroke-width="2"/><rect x="22" y="30" width="114" height="48" rx="5" fill="#162735" stroke="#67e8f9"/><text x="79" y="59" text-anchor="middle" fill="#e2e8f0">Desarrollo</text><rect x="22" y="111" width="114" height="48" rx="5" fill="#162735" stroke="#426071"/><text x="79" y="140" text-anchor="middle" fill="#e2e8f0">Producto</text><rect x="344" y="30" width="114" height="48" rx="5" fill="#162735" stroke="#10b981"/><text x="401" y="59" text-anchor="middle" fill="#e2e8f0">Operaciones</text><rect x="344" y="111" width="114" height="48" rx="5" fill="#162735" stroke="#426071"/><text x="401" y="140" text-anchor="middle" fill="#e2e8f0">Negocio</text>'
+  }
+};
+
+function foundationIllustration(id) {
+  if (id === 'most') return architectureIllustration('microservicios');
+  const illustration = foundationIllustrations[id];
+  return `<figure class="architecture-illustration"><svg viewBox="0 0 480 190" role="img" aria-label="${illustration.label}">${illustration.svg}</svg><figcaption>${illustration.caption}</figcaption></figure>`;
+}
+
+function modelToHtml(m, id) {
+  let h = `<h3>${m.icon} ${m.name}</h3><p><em>${m.subtitle}</em></p>${architectureIllustration(id)}<p>${m.description}</p>`;
   h += `<h4>Visualizar</h4><p>${m.visualizar.text}</p><ul>${m.visualizar.points.map(p => `<li>${p}</li>`).join('')}</ul>`;
   h += `<h4>Planificar</h4><p>${m.planificar.text}</p><ul>${m.planificar.points.map(p => `<li>${p}</li>`).join('')}</ul>`;
   h += `<h4>Comunicar</h4><p>${m.comunicar.text}</p><ul>${m.comunicar.points.map(p => `<li>${p}</li>`).join('')}</ul>`;
@@ -113,6 +171,7 @@ let activeNode = null;
 let savedPos = { x: 0, y: 0 };
 let hubEntryCooldownUntil = 0;
 let hubNodeBlocked = null;
+let previousDoorBlocked = false;
 
 // Particles
 let particles = [];
@@ -192,11 +251,11 @@ const levels = [
     behavior: BH.FLOAT,
     door: { x: 0, y: 0, width: 120, height: 30, open: false },
     nodes: [
-      { id: 'intro', px: 0.25, py: 0.35, read: false, title: '¿Qué son los Modelos Arquitectónicos?', content: '<p>Un modelo arquitectónico es un <strong>blueprint estructural</strong> que define cómo se organizan, conectan y comunican los componentes de un sistema de software.</p><p>Establece las reglas fundamentales de diseño que guían la construcción, el despliegue y la evolución de aplicaciones a escala.</p>' },
-      { id: 'vis', px: 0.75, py: 0.35, read: false, title: 'Pilar 1: Visualizar', content: '<p>Diagramar y representar gráficamente el sistema. Permite a los equipos <strong>ver la arquitectura</strong> antes de construirla, usando diagramas UML, C4, o flujos de datos.</p><ul><li>Diagramas de componentes y despliegue</li><li>Mapas de dependencias entre servicios</li><li>Flujos de datos y secuencias de comunicación</li><li>Vistas lógicas, físicas y de proceso</li></ul>' },
-      { id: 'plan', px: 0.25, py: 0.65, read: false, title: 'Pilar 2: Planificar', content: '<p>Facilitar la toma de decisiones técnicas, la estimación de recursos y sprints, y la <strong>mitigación de riesgos</strong> desde las fases tempranas del proyecto.</p><ul><li>Estimación de esfuerzo y complejidad por módulo</li><li>Identificación de cuellos de botella y riesgos</li><li>Definición de contratos entre equipos</li><li>Estrategia de escalabilidad y despliegue</li></ul>' },
-      { id: 'com', px: 0.75, py: 0.65, read: false, title: 'Pilar 3: Comunicar', content: '<p>Servir como <strong>lenguaje común</strong> entre desarrolladores, arquitectos, diseñadores UX/UI, PMs y stakeholders para alinear expectativas y decisiones.</p><ul><li>Documentación viva y comprensible</li><li>Onboarding acelerado de nuevos miembros</li><li>Alineación entre equipos técnicos y negocio</li><li>ADRs (Architecture Decision Records)</li></ul>' },
-      { id: 'most', px: 0.5, py: 0.5, read: false, title: 'Modelo Más Usado', content: '<p>Según encuestas de <strong>O\'Reilly (2024)</strong>, <strong>InfoQ</strong> y reportes de <strong>Gartner</strong>, la arquitectura de microservicios es el modelo dominante en empresas tecnológicas.</p><p><strong>Razones:</strong></p><ul><li>Containerización (Docker + Kubernetes)</li><li>Cloud Computing (AWS, Azure, GCP)</li><li>DevOps y CI/CD</li><li>Escalabilidad selectiva</li></ul>' }
+      { id: 'intro', px: 0.25, py: 0.35, read: false, title: '¿Qué son los Modelos Arquitectónicos?', content: `${foundationIllustration('intro')}<p>Un modelo arquitectónico es un <strong>blueprint estructural</strong> que define cómo se organizan, conectan y comunican los componentes de un sistema de software.</p><p>Establece las reglas fundamentales de diseño que guían la construcción, el despliegue y la evolución de aplicaciones a escala.</p>` },
+      { id: 'vis', px: 0.75, py: 0.35, read: false, title: 'Pilar 1: Visualizar', content: `${foundationIllustration('vis')}<p>Diagramar y representar gráficamente el sistema. Permite a los equipos <strong>ver la arquitectura</strong> antes de construirla, usando diagramas UML, C4, o flujos de datos.</p><ul><li>Diagramas de componentes y despliegue</li><li>Mapas de dependencias entre servicios</li><li>Flujos de datos y secuencias de comunicación</li><li>Vistas lógicas, físicas y de proceso</li></ul>` },
+      { id: 'plan', px: 0.25, py: 0.65, read: false, title: 'Pilar 2: Planificar', content: `${foundationIllustration('plan')}<p>Facilitar la toma de decisiones técnicas, la estimación de recursos y sprints, y la <strong>mitigación de riesgos</strong> desde las fases tempranas del proyecto.</p><ul><li>Estimación de esfuerzo y complejidad por módulo</li><li>Identificación de cuellos de botella y riesgos</li><li>Definición de contratos entre equipos</li><li>Estrategia de escalabilidad y despliegue</li></ul>` },
+      { id: 'com', px: 0.75, py: 0.65, read: false, title: 'Pilar 3: Comunicar', content: `${foundationIllustration('com')}<p>Servir como <strong>lenguaje común</strong> entre desarrolladores, arquitectos, diseñadores UX/UI, PMs y stakeholders para alinear expectativas y decisiones.</p><ul><li>Documentación viva y comprensible</li><li>Onboarding acelerado de nuevos miembros</li><li>Alineación entre equipos técnicos y negocio</li><li>ADRs (Architecture Decision Records)</li></ul>` },
+      { id: 'most', px: 0.5, py: 0.5, read: false, title: 'Modelo Más Usado', content: `${foundationIllustration('most')}<p>Según encuestas de <strong>O\'Reilly (2024)</strong>, <strong>InfoQ</strong> y reportes de <strong>Gartner</strong>, la arquitectura de microservicios es el modelo dominante en empresas tecnológicas.</p><p><strong>Razones:</strong></p><ul><li>Containerización (Docker + Kubernetes)</li><li>Cloud Computing (AWS, Azure, GCP)</li><li>DevOps y CI/CD</li><li>Escalabilidad selectiva</li></ul>` }
     ]
   },
   {
@@ -205,7 +264,7 @@ const levels = [
     door: { x: 0, y: 0, width: 120, height: 30, open: false },
     nodes: Object.entries(categoryData).map(([k, d], i) => ({
       id: k, px: 0.2 + (i % 3) * 0.3, py: 0.3 + Math.floor(i / 3) * 0.35,
-      read: false, title: d.title, content: d.content
+      read: false, title: d.title, content: `${architectureIllustration(k)}${d.content}`
     }))
   },
   {
@@ -214,7 +273,7 @@ const levels = [
     door: { x: 0, y: 0, width: 120, height: 30, open: false },
     nodes: Object.entries(modelsData).map(([k, d], i) => ({
       id: k, px: 0.15 + (i % 3) * 0.35, py: 0.3 + Math.floor(i / 3) * 0.35,
-      read: false, title: `${d.icon} ${d.name}`, content: modelToHtml(d)
+      read: false, title: `${d.icon} ${d.name}`, content: modelToHtml(d, k)
     }))
   },
   {
@@ -510,6 +569,27 @@ function drawDoor() {
   ctx.fillText(d.open ? '▲ PUERTA ABIERTA ▲' : '🔒 BLOQUEADA', d.x + d.width / 2, d.y + d.height + 18);
 }
 
+function getPreviousDoor() {
+  return { x: cw / 2 - 60, y: ch - 70, width: 120, height: 30 };
+}
+
+function drawPreviousDoor() {
+  if (currentLevelIdx === 0) return;
+  const d = getPreviousDoor();
+  ctx.fillStyle = '#06b6d4';
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = ctx.fillStyle;
+  ctx.fillRect(d.x, d.y, d.width, d.height);
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = '#a5f3fc';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(d.x, d.y, d.width, d.height);
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 11px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('▼ NIVEL ANTERIOR', d.x + d.width / 2, d.y - 10);
+}
+
 function drawRoomFragments() {
   const nextFragment = roomFragments.findIndex(f => !f.collected);
   roomFragments.forEach((f, i) => {
@@ -711,6 +791,19 @@ function update() {
       }
     });
 
+    // Return to the previous level through the lower door.
+    const previousDoor = getPreviousDoor();
+    if (previousDoorBlocked && player.y < previousDoor.y - 80) previousDoorBlocked = false;
+    if (currentLevelIdx > 0 && !previousDoorBlocked &&
+        player.x > previousDoor.x - 10 && player.x < previousDoor.x + previousDoor.width + 10 &&
+        player.y > previousDoor.y - 10 && player.y < previousDoor.y + previousDoor.height + player.size) {
+      currentLevelIdx--;
+      player.x = cw / 2;
+      player.y = ch - 120;
+      previousDoorBlocked = true;
+      updateHubUI();
+    }
+
     // Door collision
     const d = lvl.door;
     if (d.open && player.x > d.x - 10 && player.x < d.x + d.width + 10 &&
@@ -775,6 +868,7 @@ function loop() {
   if (gameState === STATE.HUB) {
     drawGrid('rgba(99, 102, 241, 0.06)');
     drawDoor();
+    drawPreviousDoor();
     drawHubNodes(getLevelNodes());
     drawPlayer();
   } else if (gameState === STATE.ROOM) {
