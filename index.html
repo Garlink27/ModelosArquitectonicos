@@ -3,44 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modelos Arquitectónicos - El Juego</title>
+  <title>ArchiModels: The Game — Modelos Arquitectónicos Interactivos</title>
+  <meta name="description" content="Aprende modelos arquitectónicos de software jugando un videojuego interactivo por niveles." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <div id="game-ui">
-    <div class="header">
-      <h1>ArchiModels: The Game</h1>
-      <div id="level-indicator">Nivel 1: Fundamentos</div>
+  <!-- HUB UI -->
+  <div id="hub-ui">
+    <div class="hub-header">
+      <div class="hub-header__left">
+        <h1 id="game-title">ArchiModels: The Game</h1>
+        <div id="level-indicator">Nivel 1: Fundamentos</div>
+      </div>
+      <div id="progress-container">
+        <span id="progress-text">Nodos: 0 / 4</span>
+        <div class="progress-bar"><div id="progress-fill"></div></div>
+      </div>
     </div>
-
-    <div id="progress-container">
-      <span id="progress-text">Nodos leídos: 0 / 4</span>
-      <div class="progress-bar"><div id="progress-fill"></div></div>
+    <div class="hub-instructions" id="hub-instructions">
+      <p>Usa <strong>W A S D</strong> o las <strong>Flechas</strong> para moverte.</p>
+      <p>Toca los <span class="hl-amber">Orbes de Datos</span> para teletransportarte.</p>
+      <p>Lee todo para abrir la <span class="hl-green">Puerta</span> al siguiente nivel.</p>
     </div>
   </div>
 
-  <div class="instructions">
-    <p>Usa <strong>W A S D</strong> o las <strong>Flechas</strong> para moverte.</p>
-    <p>Acércate a los <span class="highlight-node">Nodos de Información</span> para teletransportarte a las salas de datos.</p>
-  </div>
-
-  <canvas id="game-canvas"></canvas>
-
-  <!-- Information Room UI (Terminal) -->
-  <div id="info-room-ui" class="hidden">
-    <div class="terminal">
+  <!-- ROOM UI -->
+  <div id="room-ui" class="hidden">
+    <div class="terminal" id="terminal-panel">
       <div class="terminal__header">
         <h2 id="terminal-title">Título</h2>
+        <div class="terminal__progress">
+          <span id="room-progress-text">Datos: 0/0</span>
+          <div class="progress-bar progress-bar--small"><div id="room-progress-fill"></div></div>
+        </div>
       </div>
       <div class="terminal__content" id="terminal-content"></div>
     </div>
-    <div class="room-instructions" id="room-instructions">
-      <p>💡 Recolecta todos los <strong style="color:var(--accent-amber)">Fragmentos de Datos</strong> para activar el portal de salida.</p>
+    <div class="room-hint" id="room-hint">
+      <p>🎮 Recoge los <strong class="hl-amber">Fragmentos</strong> para revelar información</p>
+      <p>Activa el <strong class="hl-green">Portal</strong> al recolectar todos</p>
     </div>
   </div>
+
+  <canvas id="game-canvas"></canvas>
 
   <script type="module" src="./main.js"></script>
 </body>
