@@ -107,6 +107,7 @@ const STATE = { HUB: 0, WARP_IN: 1, ROOM: 2, WARP_OUT: 3 };
 let gameState = STATE.HUB;
 let currentLevelIdx = 0;
 let keys = {};
+let hasStarted = false;
 let warpProgress = 0;
 let activeNode = null;
 let savedPos = { x: 0, y: 0 };
@@ -126,10 +127,20 @@ const player = { size: 28, speed: 6, color: '#06b6d4', glow: '#67e8f9', x: 0, y:
 
 // Prevent scroll on arrows
 window.addEventListener('keydown', e => {
+  if (!hasStarted && e.code === 'Space') {
+    e.preventDefault();
+    document.getElementById('start-button').click();
+    return;
+  }
   keys[e.key.toLowerCase()] = true;
   if (['arrowup','arrowdown','arrowleft','arrowright',' '].includes(e.key.toLowerCase())) e.preventDefault();
 });
 window.addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
+
+document.getElementById('start-button').addEventListener('click', () => {
+  hasStarted = true;
+  document.getElementById('start-screen').classList.add('hidden');
+});
 
 // =====================================================================
 //  FRAGMENT BEHAVIORS
@@ -642,6 +653,8 @@ function drawWarp() {
 // =====================================================================
 
 function update() {
+  if (!hasStarted) return;
+
   // Warp transitions
   if (gameState === STATE.WARP_IN || gameState === STATE.WARP_OUT) {
     warpProgress += 0.035;

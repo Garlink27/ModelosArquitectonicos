@@ -11,6 +11,37 @@
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
+  <main id="start-screen" class="start-screen" aria-labelledby="start-title">
+    <div class="start-screen__topline">
+      <span class="start-screen__mark" aria-hidden="true">A</span>
+      <span>LABORATORIO DE ARQUITECTURA DE SOFTWARE</span>
+      <span class="start-screen__version">EXPLORACIÓN 01—04</span>
+    </div>
+    <div class="start-screen__layout">
+      <section class="start-screen__intro">
+        <p class="start-screen__eyebrow"><span></span> SISTEMAS · ESTRUCTURAS · DECISIONES</p>
+        <h1 id="start-title">Archi<span>Models</span></h1>
+        <p class="start-screen__summary">Cada sistema tiene una arquitectura.<br />Recorre sus modelos y descubre cómo toman forma.</p>
+        <button id="start-button" class="start-screen__button" type="button">
+          Iniciar recorrido <span aria-hidden="true">↗</span>
+        </button>
+        <p class="start-screen__controls">W A S D <i></i> FLECHAS PARA MOVERTE</p>
+      </section>
+      <div class="start-screen__diagram" aria-hidden="true">
+        <div class="diagram__caption"><span>VISTA DEL SISTEMA</span><span>01 / 04</span></div>
+        <div class="diagram__stack">
+          <div class="diagram__layer diagram__layer--interface"><span class="diagram__index">01</span><span>INTERFAZ</span><b>Presentación</b><i></i></div>
+          <div class="diagram__link"><span></span></div>
+          <div class="diagram__layer diagram__layer--domain"><span class="diagram__index">02</span><span>DOMINIO</span><b>Lógica de negocio</b><i></i></div>
+          <div class="diagram__link"><span></span></div>
+          <div class="diagram__layer diagram__layer--data"><span class="diagram__index">03</span><span>DATOS</span><b>Persistencia</b><i></i></div>
+        </div>
+        <div class="diagram__footer"><span><i></i> NODO ACTIVO</span><span>DEPENDENCIAS Y FLUJOS</span></div>
+      </div>
+    </div>
+    <div class="start-screen__footer"><span>ARQUITECTURA · EN MOVIMIENTO</span><span>UN JUEGO INTERACTIVO</span></div>
+  </main>
+
   <!-- HUB UI -->
   <div id="hub-ui">
     <div class="hub-header">
